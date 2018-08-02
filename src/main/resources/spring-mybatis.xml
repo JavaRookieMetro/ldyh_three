@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+
+
+    <!-- 配置Bean用于数据库连接池 -->
+    <bean id="dataSource"
+          class="org.apache.commons.dbcp.BasicDataSource"
+          destroy-method="close">
+        <property name="url"
+                  value="#{dbConfig.url}"/>
+        <property name="driverClassName"
+                  value="#{dbConfig.driver}"/>
+        <property name="username"
+                  value="#{dbConfig.user}"/>
+        <property name="password"
+                  value="#{dbConfig.password}"/>
+        <property name="initialSize"
+                  value="#{dbConfig.initSize}"/>
+        <property name="maxActive"
+                  value="#{dbConfig.maxActive}"/>
+    </bean>
+
+    <!-- 配置事务管理 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- 配置MapperScannerConfigurer -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!-- 用于配置持久层接口在哪里 -->
+        <property name="basePackage"
+                  value="org.bj.ldyh.dao"/>
+    </bean>
+
+    <!-- 配置SqlSessionFactoryBean -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 用于配置数据库连接池 -->
+        <property name="dataSource"
+                  ref="dataSource"/>
+        <!-- 用于配置持久层映射文件在哪里 -->
+        <property name="mapperLocations"
+                  value="classpath:mappers/*.xml"/>
+    </bean>
+</beans>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+  
+<mapper namespace="org.bj.ldyh.dao.CustomerDao">
+	<!-- 根据输入信息模糊查询所有用户 -->
+	<!-- List<Customer> showAllCustomer(String input); -->
+	<select id="showAllCustomer" parameterType="java.lang.String" resultType="org.bj.ldyh.model.Customer">
+		SELECT *
+		FROM customer 
+		WHERE CONCAT(name,age,gender,industry,address,importance)
+		LIKE CONCAT("%",#{input},"%") 
+		
+	</select>
+</mapper>
