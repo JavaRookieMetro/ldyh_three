@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.bj.ldyh.dao.CpimidMapper">
+  <resultMap id="BaseResultMap" type="org.bj.ldyh.model.Cpimid">
+    <constructor>
+      <idArg column="cpid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="cid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="pid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    cpid, cid, pid, createTime, updateTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cpmid
+    where cpid = #{cpid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cpmid
+    where cpid = #{cpid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.bj.ldyh.model.Cpimid">
+    insert into cpmid (cpid, cid, pid, 
+      createTime, updateTime)
+    values (#{cpid,jdbcType=INTEGER}, #{cid,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="org.bj.ldyh.model.Cpimid">
+    insert into cpmid
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cpid != null">
+        cpid,
+      </if>
+      <if test="cid != null">
+        cid,
+      </if>
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+      <if test="updatetime != null">
+        updateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cpid != null">
+        #{cpid,jdbcType=INTEGER},
+      </if>
+      <if test="cid != null">
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="pid != null">
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.bj.ldyh.model.Cpimid">
+    update cpmid
+    <set>
+      <if test="cid != null">
+        cid = #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="pid != null">
+        pid = #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where cpid = #{cpid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.bj.ldyh.model.Cpimid">
+    update cpmid
+    set cid = #{cid,jdbcType=INTEGER},
+      pid = #{pid,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP}
+    where cpid = #{cpid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,13 +1,10 @@
 package org.bj.ldyh.service;
 
-import java.util.List;
-
 import org.bj.ldyh.model.Customer;
+import org.bj.ldyh.model.ResponseResult;
 
 public interface ICustomerService {
-    /**
-     * 根据输入信息查找对应的客户信息
-     * @return
-     */
-    List<Customer> getAllCustomer(String input);
+
+    ResponseResult<Customer> getCustomerList(String query);
+
 }

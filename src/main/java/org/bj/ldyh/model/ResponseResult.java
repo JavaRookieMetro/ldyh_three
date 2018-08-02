@@ -74,6 +74,10 @@ public class ResponseResult<T> implements Serializable{
 			return false;
 		return true;
 	}
+
+	public static <T> ResponseResult<T> createBySuccess(String message, T data) {
+		return new ResponseResult(0 ,message, data);
+	}
 	@Override
 	public String toString() {
 		return "ResponseResult [state=" + state + ", message=" + message + ", data=" + data + "]";
