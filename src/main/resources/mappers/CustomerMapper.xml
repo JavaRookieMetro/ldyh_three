@@ -10,10 +10,12 @@
       <arg column="address" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="importance" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="gender" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    cid, name, age, industry, address, importance, gender
+    cid, name, age, industry, address, importance, gender, createTime, updateTime
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -26,6 +28,42 @@
     <include refid="Base_Column_List" />
     from customer
     where concat(name,age,industry,address,importance,gender) like '%${query}%'
+    <if test='sort != null and sort == "name" and dir =="desc"'>
+      order by name desc
+    </if>
+    <if test='sort != null and sort == "name" and dir =="asc"'>
+      order by name asc
+    </if>
+    <if test='sort != null and sort == "age" and dir =="desc"'>
+      order by age desc
+    </if>
+    <if test='sort != null and sort == "age" and dir =="asc"'>
+      order by age asc
+    </if>
+    <if test='sort != null and sort == "industry" and dir == "desc"'>
+      order by industry desc
+    </if>
+    <if test='sort != null and sort == "industry" and dir == "asc"'>
+      order by industry asc
+    </if>
+    <if test='sort != null and sort == "gender" and dir == "desc"'>
+      order by gender desc
+    </if>
+    <if test='sort != null and sort == "gender" and dir == "asc"'>
+      order by gender asc
+    </if>
+    <if test='sort != null and sort == "address" and dir == "desc"'>
+      order by address desc
+    </if>
+    <if test='sort != null and sort == "address" and dir == "asc"'>
+      order by address asc
+    </if>
+    <if test='sort != null and sort == "importance" and dir == "desc"'>
+      order by importance desc
+    </if>
+    <if test='sort != null and sort == "importance" and dir == "asc"'>
+      order by importance asc
+    </if>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from customer
@@ -34,10 +72,10 @@
   <insert id="insert" parameterType="org.bj.ldyh.model.Customer">
     insert into customer (cid, name, age, 
       industry, address, importance, 
-      gender)
+      gender, createTime, updateTime)
     values (#{cid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, 
       #{industry,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{importance,jdbcType=VARCHAR}, 
-      #{gender,jdbcType=VARCHAR})
+      #{gender,jdbcType=VARCHAR}, now(), now())
   </insert>
   <insert id="insertSelective" parameterType="org.bj.ldyh.model.Customer">
     insert into customer
@@ -63,6 +101,12 @@
       <if test="gender != null">
         gender,
       </if>
+      <if test="createTime != null">
+        createTime,
+      </if>
+      <if test="updateTime != null">
+        updateTime,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="cid != null">
@@ -86,6 +130,7 @@
       <if test="gender != null">
         #{gender,jdbcType=VARCHAR},
       </if>
+      now(),now()
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="org.bj.ldyh.model.Customer">
@@ -109,6 +154,7 @@
       <if test="gender != null">
         gender = #{gender,jdbcType=VARCHAR},
       </if>
+        updateTime = now()
     </set>
     where cid = #{cid,jdbcType=INTEGER}
   </update>
@@ -119,7 +165,8 @@
       industry = #{industry,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
       importance = #{importance,jdbcType=VARCHAR},
-      gender = #{gender,jdbcType=VARCHAR}
+      gender = #{gender,jdbcType=VARCHAR},
+      updateTime = now()
     where cid = #{cid,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -18,5 +18,6 @@ public interface CustomerMapper {
 
     int updateByPrimaryKey(Customer record);
 
-    List<Customer> selectBySearch(@Param("query") String query);
+    List<Customer> selectBySearch(@Param("query") String query, @Param("sort")String sort,
+                                  @Param("dir") String dir);
 }

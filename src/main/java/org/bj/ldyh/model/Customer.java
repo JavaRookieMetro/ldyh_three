@@ -1,5 +1,7 @@
 package org.bj.ldyh.model;
 
+import java.util.Date;
+
 public class Customer {
     private Integer cid;
 
@@ -15,7 +17,12 @@ public class Customer {
 
     private String gender;
 
-    public Customer(Integer cid, String name, Integer age, String industry, String address, String importance, String gender) {
+    private Date createtime;
+
+    private Date updatetime;
+
+
+    public Customer(Integer cid, String name, Integer age, String industry, String address, String importance, String gender, Date createtime, Date updatetime) {
         this.cid = cid;
         this.name = name;
         this.age = age;
@@ -23,6 +30,8 @@ public class Customer {
         this.address = address;
         this.importance = importance;
         this.gender = gender;
+        this.createtime = createtime;
+        this.updatetime = updatetime;
     }
 
     public Customer() {
@@ -83,5 +92,21 @@ public class Customer {
 
     public void setGender(String gender) {
         this.gender = gender == null ? null : gender.trim();
+    }
+
+    public Date getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
+    }
+
+    public Date getUpdatetime() {
+        return updatetime;
+    }
+
+    public void setUpdatetime(Date updatetime) {
+        this.updatetime = updatetime;
     }
 }
